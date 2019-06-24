@@ -15,7 +15,7 @@ master:
     adminPassword: jenkins
     serviceType: NodePort
     installPlugins:
-      - configuration-as-code:1.20
+      - configuration-as-code:1.21
       - kubernetes:1.16.1
       - workflow-job:2.32
       - workflow-aggregator:2.6
@@ -26,7 +26,7 @@ master:
       - github-branch-source:2.5.3
       - slack:2.27
       - blueocean:1.17.0
-      - pipeline-maven:3.7.1
+      - pipeline-maven:3.8.0
       - pipeline-utility-steps:2.3.0
     overwritePlugins: true
     JCasC:
@@ -78,6 +78,24 @@ master:
                                     workingDir: ""
                                     command: ""
                                     args: ""
+                              - name: "docker"
+                                label: "docker"
+                                nodeUsageMode: EXCLUSIVE
+                                inheritFrom: "default"
+                                containers:
+                                  - name: jnlp
+                                    image: "meetveracity/jenkins-slave-docker"
+                                    alwaysPullImage: true
+                                    workingDir: ""
+                                    command: ""
+                                    args: ""
+                                    envVars:
+                                      - envVar:
+                                          key: "DOCKER_REGISTRY"
+                                          value: "nexus.dev8.bip.va.gov:5000"
+                                      - envVar:
+                                          key: "DOCKER_CREDENTIAL_ID"
+                                          value: "nexus-login"
 
             credentials: |
                 credentials:
