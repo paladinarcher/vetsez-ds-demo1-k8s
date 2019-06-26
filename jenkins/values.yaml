@@ -92,10 +92,24 @@ master:
                                     envVars:
                                       - envVar:
                                           key: "DOCKER_REGISTRY"
-                                          value: "nexus.dev8.bip.va.gov:5000"
+                                          value: "nexus-proxy:5000"
                                       - envVar:
                                           key: "DOCKER_CREDENTIAL_ID"
                                           value: "nexus-login"
+                                      - envVar:
+                                          key: "DOCKER_HOST"
+                                          value: "tcp://localhost:2375"
+                                  - name: dind
+                                    image: "docker:18.05-dind"
+                                    alwaysPullImage: true
+                                    workingDir: ""
+                                    command: ""
+                                    args: ""
+                                    privileged: true
+                                volumes:
+                                  - emptyDirVolume:
+                                      mountPath: /var/lib/docker
+                                      memory: false
 
             credentials: |
                 credentials:
@@ -108,6 +122,12 @@ master:
                                 username: ${GIT_USER:-jasonluck}
                                 password: ${GIT_ACCESS_TOKEN}
                                 description: github
+                            - usernamePassword:
+                                scope:    GLOBAL
+                                id:       nexus-login
+                                username: admin
+                                password: admin123
+                                description: nexus-login
             globalLibrary: |
                 unclassified:
                     globalLibraries:
