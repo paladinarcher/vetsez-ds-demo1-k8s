@@ -1,0 +1,16 @@
+
+nexusProxy:
+    enabled: false
+    svcName: nexus-proxy
+    env:
+        nexusHttpHost: nexus-proxy
+
+ingress:
+    enabled: false
+
+service:
+    enabled: true
+    name: nexus
+    targetPort: 8081
+    port: 8080
+    serviceType: NodePort
