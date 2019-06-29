@@ -92,10 +92,10 @@ master:
                                     envVars:
                                       - envVar:
                                           key: "DOCKER_REGISTRY"
-                                          value: "nexus-proxy:5000"
+                                          value: "https://registry-docker-registry:5000"
                                       - envVar:
                                           key: "DOCKER_CREDENTIAL_ID"
-                                          value: "nexus-login"
+                                          value: "docker-registry"
                                       - envVar:
                                           key: "DOCKER_HOST"
                                           value: "tcp://localhost:2375"
@@ -110,6 +110,9 @@ master:
                                   - emptyDirVolume:
                                       mountPath: /var/lib/docker
                                       memory: false
+                                  - configMapVolume:
+                                      mountPath: /etc/docker/certs.d/registry-docker-registry
+                                      configMapName: docker-registry-ca
 
             credentials: |
                 credentials:
@@ -128,6 +131,12 @@ master:
                                 username: admin
                                 password: admin123
                                 description: nexus-login
+                            - usernamePassword:
+                                scope:    GLOBAL
+                                id:       docker-registry
+                                username: docker
+                                password: docker
+                                description: docker-registry
             globalLibrary: |
                 unclassified:
                     globalLibraries:
