@@ -78,6 +78,7 @@ master:
                                     workingDir: ""
                                     command: ""
                                     args: ""
+                                serviceAccount: jenkins-helm
                               - name: "docker"
                                 label: "docker"
                                 nodeUsageMode: EXCLUSIVE
@@ -92,7 +93,7 @@ master:
                                     envVars:
                                       - envVar:
                                           key: "DOCKER_REGISTRY"
-                                          value: "https://registry-docker-registry:5000"
+                                          value: "https://registry-docker-registry"
                                       - envVar:
                                           key: "DOCKER_CREDENTIAL_ID"
                                           value: "docker-registry"
