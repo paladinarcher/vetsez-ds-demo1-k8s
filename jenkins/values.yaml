@@ -92,8 +92,8 @@ master:
                                     args: ""
                                     envVars:
                                       - envVar:
-                                          key: "DOCKER_REGISTRY"
-                                          value: "https://registry-docker-registry"
+                                          key: "DOCKER_REGISTRY_URL"
+                                          value: "https://registry-docker-registry.default.svc.cluster.local"
                                       - envVar:
                                           key: "DOCKER_CREDENTIAL_ID"
                                           value: "docker-registry"
@@ -112,7 +112,7 @@ master:
                                       mountPath: /var/lib/docker
                                       memory: false
                                   - configMapVolume:
-                                      mountPath: /etc/docker/certs.d/registry-docker-registry
+                                      mountPath: /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local
                                       configMapName: docker-registry-ca
 
             credentials: |
