@@ -1,11 +1,6 @@
+# [Docker Registry Chart](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 ## Generate Self-Signed Certificates
-```bash
-openssl req \
-       -newkey rsa:2048 -nodes -keyout server.key \
-       -x509 -days 365 -out server.crt
-```
-
 ```bash
 cfssl print-defaults config > ca-config.json;
 cat <<EOF | cfssl genkey -initca - | cfssljson -bare ca;
@@ -57,7 +52,7 @@ $(cat ca.pem | sed 's/^/    /')
 EOF
 ```
 
-## Allow Minikube to communicate with registry
+### Allow Minikube to communicate with registry
 This process will need to be run each time that Minikube is started.
 
 Add the CA certficate to minikube.
@@ -68,4 +63,9 @@ cat ca.pem | minikube ssh "sudo mkdir -p /etc/docker/certs.d/registry-docker-reg
 Add a host entry to minikube.
 ```bash
 cat '127.0.0.1       registry-docker-registry.default.svc.cluster.local' | minikube ssh "sudo tee -a /etc/hosts"
+```
+
+## Install Chart
+```bash
+helm install -n registry stable/docker-registrty -f values.yaml
 ```
