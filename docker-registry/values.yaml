@@ -1,0 +1,13 @@
+service:
+    name: docker-registry
+    type: NodePort
+    port: 443
+    tls:
+        - secretName: docker-registry-tls
+          hosts:
+            - docker-registry.local
+
+tlsSecretName: docker-registry-tls
+secrets:
+    # Username: docker / Password: docker
+    htpasswd: docker:$2y$05$vgALDaYXXuqKfCU.dL8GGuotIGfBKIknyOC0oDbmpXdsgV1HYCWNK
