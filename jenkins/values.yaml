@@ -78,6 +78,10 @@ master:
                                     workingDir: ""
                                     command: ""
                                     args: ""
+                                    envVars:
+                                      - envVar:
+                                          key: "TILLER_NAMESPACE"
+                                          value: "kube-system"
                                 serviceAccount: jenkins-helm
                               - name: "docker"
                                 label: "docker"
