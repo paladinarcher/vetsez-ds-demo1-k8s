@@ -1,2 +1,5 @@
-Add Notes on how to create SSH key secret with id_rsa and config files
+To add an SSH key for Git authentication:
+    * Run `cat /path/to/privateKey | base64` and copy the result
+    * Edit the  {{ include "git2consul.fullname" . }}-ssh Secret object
+    * Update the value of the `id_rsa` key, pasting the base64 encoded private key value.
 
