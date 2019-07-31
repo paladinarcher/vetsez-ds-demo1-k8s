@@ -18,9 +18,6 @@ git:
   #Omit the repository name from the KV path in Consul. Defaults to false if not set.
   ignoreRepoName: true
 
-  #Omit file extensions from folder/key names. Defaults to false if not set.
-  #ignoreFileExtension: false
-
   #Add the branch name as part of the key prefix. Defaults tto true if not set.
   includeBranchName: false
 
