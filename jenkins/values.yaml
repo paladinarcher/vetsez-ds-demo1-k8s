@@ -83,6 +83,28 @@ master:
                                           key: "TILLER_NAMESPACE"
                                           value: "kube-system"
                                 serviceAccount: jenkins-helm
+                              - name: "git2consul"
+                                label: "git2consul"
+                                nodeUsageMode: EXCLUSIVE
+                                inheritFrom: "default"
+                                containers:
+                                  - name: jnlp
+                                    image: "meetveracity/jenkins-slave-git2consul"
+                                    alwaysPullImage: true
+                                    workingDir: ""
+                                    command: ""
+                                    args: ""
+                                    envVars:
+                                      - envVar:
+                                          key: "TILLER_NAMESPACE"
+                                          value: "kube-system"
+                                volumes:
+                                  - emptyDirVolume:
+                                      mountPath: /var/lib/docker
+                                      memory: false
+                                  - configMapVolume:
+                                      mountPath: /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local
+                                      configMapName: docker-registry-ca
                               - name: "docker"
                                 label: "docker"
                                 nodeUsageMode: EXCLUSIVE

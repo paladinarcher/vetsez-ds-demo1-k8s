@@ -1,0 +1,15 @@
+# Choose an optional name for the datacenter
+global:
+  datacenter: minikube
+
+# Enable the Consul Web UI via a NodePort
+ui:
+  service:
+    type: 'NodePort'
+
+server:
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0

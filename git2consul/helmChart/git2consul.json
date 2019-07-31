@@ -1,0 +1,37 @@
+{
+    "version": "1.0",
+    "repos": [
+        {
+            "name": "{{ .Release.Name }}",
+            "url": {{ required "A valid `git.repository` value is required!" .Values.git.repository | quote }},
+            {{- if .Values.git.sourceRoot }}
+            "source_root": "{{ .Values.git.sourceRoot }}",
+            {{- end }}
+            {{- if .Values.git.mountpoint }}
+            "mountpoint": "{{ .Values.git.mountpoint }}",
+            {{- end }}
+            {{- if .Values.git.ignoreRepoName }}
+            "ignore_repo_name": {{ .Values.git.ignoreRepoName }},
+            {{- end }}
+            {{- if .Values.git.ignoreFileExtension }}
+            "ignore_file_extension": {{ .Values.git.ignoreFileExtension }},
+            {{- end }}
+            {{- if .Values.git.includeBranchName }}
+            "include_branch_name": {{ .Values.git.includeBranchName }},
+            {{- end }}
+            {{- with .Values.git.branches }}
+            "branches": {{- toJson . | indent 1 }},
+            {{- end }}
+            {{- if .Values.git.expandKeys }}
+            "expand_keys": {{ .Values.git.expandKeys }},
+            {{- end }}
+            {{- if .Values.git.expandKeysDiff }}
+            "expand_keys_diff": {{ .Values.git.expandKeysDiff }},
+            {{- end }}
+            "hooks": [{
+                "type": "polling",
+                "interval": "30"
+            }]
+        }
+    ]
+}

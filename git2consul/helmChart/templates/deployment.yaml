@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "git2consul.fullname" . }}
+  labels:
+{{ include "git2consul.labels" . | indent 4 }}
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configMap.yaml") . | sha256sum }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "git2consul.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "git2consul.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: [
+            "--config-file",
+            "/etc/git2consul.d/git2consul.json"
+          ]
+          env:
+          {{- if .Values.consul.aclTokenSecret }}
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.consul.aclTokenSecret }}
+                    key: aclToken
+          {{- end }}
+            - name: CONSUL_ENDPOINT
+            {{- if .Values.consul.endpoint }}
+              value: {{ quote .Values.consul.endpoint }}
+            {{- else }}
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            {{- end }}
+            - name: CONSUL_PORT
+              value: {{ .Values.consul.port | default 8500 | quote }}
+            {{- if .Values.consul.secure }}
+            - name: CONSUL_SECURE
+              value: {{ .Values.consul.secure | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/git2consul.d
+            - name: ssh-secret
+              mountPath: /root/.ssh
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "git2consul.fullname" . }}
+        - name: ssh-secret
+          secret:
+            secretName: {{ include "git2consul.fullname" . }}-ssh
+            defaultMode: 256
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

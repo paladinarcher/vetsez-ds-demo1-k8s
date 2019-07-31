@@ -1,0 +1,36 @@
+
+
+git:
+  #Url of the Git repository to sync to Consul. SSH should be used for private repos that require authentication
+  #This value is required
+  repository: "git@github.com:department-of-veterans-affairs/ocp-external-config.git"
+
+  #Secret containinig SSH private key to connect to Git.
+  sshSecret: "git2consul-ssh"
+
+  # Branches to mirror from the Git repository to Consul
+  branches:
+    - "master"
+
+  #Path within the Git repoistory to monitor for changes. By default the entire repo is mirrored to Consul.
+  sourceRoot: "config/dev"
+
+  #Path in Consul at which to write the key/values pairs to
+  mountpoint: "config/blue"
+
+  #Omit the repository name from the KV path in Consul. Defaults to false if not set.
+  ignoreRepoName: true
+
+  #Omit file extensions from folder/key names. Defaults to false if not set.
+  #ignoreFileExtension: false
+
+  #Add the branch name as part of the key prefix. Defaults tto true if not set.
+  includeBranchName: false
+
+  # Expand properties, YAML and JSON paths to form subpaths for keys. See https://github.com/breser/git2consul#expand_keys
+  # Defaults to false
+  expandKeys: false
+
+  # Only apply differences when updating Consul, Defaults to false if not set.
+  expandKeysDiff: true
+

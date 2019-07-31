@@ -1,0 +1,86 @@
+# Default values for git2consul.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: meetveracity/git2consul
+  tag: v0.12.13
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+#
+# Git2Consul Configuration
+#
+consul:
+  # Hostname of the Consul service. Defaults to the Host IP
+  endpoint: null
+
+  # Consul Service Port
+  port: 8500
+
+  # Is Consul endpoint secured with HTTPS. Defaults to false
+  #secure: true
+
+  # Name of the Secret object containing the Consul ACL token in a key named 'aclToken'
+  aclTokenSecret: null
+
+git:
+  #Url of the Git repository to sync to Consul. SSH should be used for private repos that require authentication
+  #This value is required
+  #repository: "git@github.com:department-of-veterans-affairs/ocp-external-config.git"
+
+  # Branches to mirror from the Git repository to Consul
+  branches:
+    - "master"
+
+  #Path within the Git repoistory to monitor for changes. By default the entire repo is mirrored to Consul.
+  sourceRoot: null
+
+  #Path in Consul at which to write the key/values pairs to
+  mountpoint: null
+
+  #Omit the repository name from the KV path in Consul. Defaults to false if not set.
+  ignoreRepoName: true
+
+  #Omit file extensions from folder/key names. Defaults to false if not set.
+  ignoreFileExtension: false
+
+  #Add the branch name as part of the key prefix. Defaults tto true if not set.
+  includeBranchName: false
+
+  # Expand properties, YAML and JSON paths to form subpaths for keys. See https://github.com/breser/git2consul#expand_keys
+  # Defaults to false
+  expandKeys: false
+
+  # Only apply differences when updating Consul, Defaults to false if not set.
+  expandKeysDiff: true
+
+  # Default SSH config file settings
+  sshConfig: "StrictHostKeyChecking no\nUserKnownHostsFile=/dev/null"
+
+  # File containing SSH private key to use for Git repository authentication
+  sshKey: null
+
