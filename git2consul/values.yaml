@@ -5,9 +5,6 @@ git:
   #This value is required
   repository: "git@github.com:department-of-veterans-affairs/ocp-external-config.git"
 
-  #Secret containinig SSH private key to connect to Git.
-  sshSecret: "git2consul-ssh"
-
   # Branches to mirror from the Git repository to Consul
   branches:
     - "master"
