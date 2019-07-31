@@ -81,6 +81,9 @@ git:
   # Default SSH config file settings
   sshConfig: "StrictHostKeyChecking no\nUserKnownHostsFile=/dev/null"
 
-  # File containing SSH private key to use for Git repository authentication
-  sshKey: null
+hook:
+  # Number of minutes between polling the Git repository for changes. Defaults to 5
+  pollingInterval: 5
+
+
 

@@ -30,7 +30,7 @@
             {{- end }}
             "hooks": [{
                 "type": "polling",
-                "interval": "30"
+                "interval": {{ .Values.hook.pollingInterval | default "5" | quote }}
             }]
         }
     ]
