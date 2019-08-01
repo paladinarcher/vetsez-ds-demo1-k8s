@@ -16,18 +16,12 @@
             {{- if .Values.git.ignoreFileExtension }}
             "ignore_file_extension": {{ .Values.git.ignoreFileExtension }},
             {{- end }}
-            {{- if .Values.git.includeBranchName }}
             "include_branch_name": {{ .Values.git.includeBranchName }},
-            {{- end }}
             {{- with .Values.git.branches }}
             "branches": {{- toJson . | indent 1 }},
             {{- end }}
-            {{- if .Values.git.expandKeys }}
             "expand_keys": {{ .Values.git.expandKeys }},
-            {{- end }}
-            {{- if .Values.git.expandKeysDiff }}
             "expand_keys_diff": {{ .Values.git.expandKeysDiff }},
-            {{- end }}
             "hooks": [{
                 "type": "polling",
                 "interval": {{ .Values.hook.pollingInterval | default "5" | quote }}
