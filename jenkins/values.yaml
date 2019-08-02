@@ -29,6 +29,7 @@ master:
       - pipeline-maven:3.8.0
       - pipeline-utility-steps:2.3.0
     overwritePlugins: true
+    javaOpts: "-Dhudson.model.DirectoryBrowserSupport.CSP= "
     JCasC:
         enabled: true
         configScripts:
