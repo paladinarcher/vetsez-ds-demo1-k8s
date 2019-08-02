@@ -7,6 +7,9 @@ To install the git2consul service, run the following command from this directory
 helm install -n git2consul -f values.yaml helmChart
 ```
 
+## Configuration
+Configuration of the Chart is done via a values.yaml file. See the [default values.yaml file](helmChart/values.yaml) for a description of all the configuration options.
+
 ## Git Authentication
 During installation, a Secret will be created for SSH authentication to git. You will need to manual set the SSH private key value
 for this Secret.
