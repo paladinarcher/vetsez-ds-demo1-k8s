@@ -1,0 +1,11 @@
+# Git repository to monitor
+git:
+  url: https://github.com/jasonluck/flux-deployments
+  branch: master
+  #path: deployment-config
+
+# Enable the Helm Operator
+helmOperator:
+  create: true
+  createCRD: true
+  #allowNamespace: default
