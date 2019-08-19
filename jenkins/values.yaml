@@ -9,6 +9,9 @@
 # This has been tested against version 1.3.0 of the Jenkins Helm chart
 #
 ###############################################################################
+serviceAccount:
+  create: false
+  name: jenkins
 master:
     #image:
     #imageTag: 
@@ -28,6 +31,7 @@ master:
       - blueocean:1.17.0
       - pipeline-maven:3.8.0
       - pipeline-utility-steps:2.3.0
+      - kubernetes-credentials-provider:0.12.1
     overwritePlugins: true
     javaOpts: "-Dhudson.model.DirectoryBrowserSupport.CSP= "
     JCasC:
@@ -142,29 +146,6 @@ master:
                                       mountPath: /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local
                                       configMapName: docker-registry-ca
 
-            credentials: |
-                credentials:
-                    system:
-                        domainCredentials:
-                        - credentials:
-                            - usernamePassword:
-                                scope:    GLOBAL
-                                id:       github
-                                username: ${GIT_USER:-jasonluck}
-                                password: ${GIT_ACCESS_TOKEN}
-                                description: github
-                            - usernamePassword:
-                                scope:    GLOBAL
-                                id:       nexus-login
-                                username: admin
-                                password: admin123
-                                description: nexus-login
-                            - usernamePassword:
-                                scope:    GLOBAL
-                                id:       docker-registry
-                                username: docker
-                                password: docker
-                                description: docker-registry
             globalLibrary: |
                 unclassified:
                     globalLibraries:
