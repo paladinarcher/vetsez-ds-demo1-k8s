@@ -57,15 +57,15 @@ This process will need to be run each time that Minikube is started.
 
 Add the CA certficate to minikube.
 ```bash
-cat ca.pem | minikube ssh "sudo mkdir -p /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local:32360 && sudo tee /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local:32360/ca.crt"
+cat ca.pem | minikube ssh "sudo mkdir -p /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local && sudo tee /etc/docker/certs.d/registry-docker-registry.default.svc.cluster.local/ca.crt"
 ```
 
 Add a host entry to minikube.
 ```bash
-cat '127.0.0.1       registry-docker-registry.default.svc.cluster.local' | minikube ssh "sudo tee -a /etc/hosts"
+echo '127.0.0.1       registry-docker-registry.default.svc.cluster.local' | minikube ssh "sudo tee -a /etc/hosts"
 ```
 
 ## Install Chart
 ```bash
-helm install -n registry stable/docker-registrty -f values.yaml
+helm install -n registry stable/docker-registry -f values.yaml
 ```
