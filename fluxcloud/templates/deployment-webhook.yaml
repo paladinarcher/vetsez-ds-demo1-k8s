@@ -31,14 +31,14 @@ spec:
               protocol: TCP
           env:
             - name: LISTEN_ADDRESS
-              value: "3032"
+              value: ":3032"
             - name: EXPORTER_TYPE
               value: "webhook"
             - name: WEBHOOK_URL
               value: {{ required "A valid .Values.fluxcloud.webhook.url value is required." .Values.fluxcloud.webhook.url | quote }}
             {{- if .Values.fluxcloud.gitHubUrl }}
             - name: GITHUB_URL
-              value: {{ .Values.fluxcloud.gitHubUrl | quote }}
+              value: {{ required "A valid .Values.fluxcloud.gitHubUrl value is required." .Values.fluxcloud.gitHubUrl | quote }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
