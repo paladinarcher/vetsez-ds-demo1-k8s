@@ -36,17 +36,28 @@ tolerations: []
 
 affinity: {}
 
+##########################################################
+# Flux Cloud application configuration
+##########################################################
+
 fluxcloud:
+
+  # GitHub URL that is monitored by Flux. Used to create links.
+  # This value is required.
   gitHubUrl: null
+
   slack:
-    # Send Notifications to Slack
+    # Enable to send Notifications to Slack about Flux deployments
     enabled: true
     # Slack Channel to send notification to.
     # channel: "#ci"
     # Slack Application URL. Ex: "https://hooks.slack.com/services/..."
     url: null
+    # Username displayed in Slack for the fluxcloud app
     username: "Flux"
     iconEmoji: ":heart:"
   webhook:
+    # Enable to fire a webhook when a Flux deployment happens
     enabled: false
+    # Url of the webhook to call. This is required if webhook.enabled is set to true
     url: null
