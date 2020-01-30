@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: meetveracity/git2consul
+  repository: docker.vetsez.net/git2consul
   tag: v0.12.13
   pullPolicy: IfNotPresent
 
